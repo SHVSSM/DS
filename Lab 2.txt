@@ -1,0 +1,305 @@
+import pandas as pd
+import numpy as np
+import random 
+import statistics
+
+
+
+
+
+stud_data=pd.read_csv("StudentsPerformance.csv")
+stud_data
+
+
+
+
+
+stud_data.info()
+
+
+
+
+
+stud_data.isnull().sum()
+
+
+
+
+
+stud_data.shape #rows and columns in dataset
+
+
+
+
+
+stud_data.size #total data cells in dataset
+
+
+
+
+
+stud_data.columns
+
+
+
+
+
+stud_data.head(10)
+
+
+
+
+
+stud_data["math score"]=stud_data['math score'].replace(np.NaN,stud_data['math score'].mean())  #replacing nan value with mean
+stud_data['math score'].head()
+
+
+
+
+
+stud_data['reading score'].head(50)
+
+
+
+
+
+stud_data['reading score']=stud_data['reading score'].replace(np.NaN,stud_data['reading score'].median())
+stud_data['reading score'].head(50)
+
+
+
+
+
+stud_data['writing score'].head(50)
+
+
+
+
+
+stud_data['writing score']=stud_data['writing score'].replace(np.NaN,statistics.mode(stud_data['writing score']))
+stud_data['writing score'].head(50)
+
+
+
+
+
+#using fill na drop na
+df1=pd.read_csv("/content/drive/MyDrive/Colab Notebooks/StudentsPerformance.csv")
+df1
+
+
+
+
+
+df1.isnull().sum()
+
+
+
+
+
+df1.dropna(inplace=True)
+
+
+
+
+
+df1  #dropped the whole row having null value
+
+
+
+
+
+#by using fillna
+
+stud_per=pd.read_csv('/content/drive/MyDrive/Colab Notebooks/StudentsPerformance.csv')
+stud_per.head()
+
+
+
+
+
+stud_per['math score']=stud_per['math score'].fillna(0)
+stud_per.isnull().sum()
+
+
+
+
+
+stud_per['reading score']=stud_per['reading score'].fillna(method='ffill')
+stud_per['reading score']
+
+
+
+
+
+stud_per['reading score']=stud_per['reading score'].interpolate(method='linear',limit_direction='forward',axis=0)
+stud_per['reading score'].head()
+
+
+
+
+
+stud_data
+
+
+
+
+
+stud_data
+
+
+
+
+
+stud_data['gender']=np.where(stud_data['gender']=='female',0,1)
+stud_data['gender']
+
+
+
+
+
+stud_data
+
+
+
+
+
+#normalizing the data
+
+stud_data=stud_data.drop(['race/ethnicity', 'parental level of education',	'lunch', 'test preparation course'],axis=1)
+stud_data
+
+
+
+
+
+#scaling
+from sklearn.preprocessing import MinMaxScaler
+scaler=MinMaxScaler(feature_range=(0,1))
+
+stud_data=pd.DataFrame(scaler.fit_transform(stud_data), columns=stud_data.columns)
+stud_data
+
+
+
+
+
+#using boxplot
+cols=['math score','reading score','writing score']
+stud_data.boxplot(cols)
+
+
+
+
+
+stud_data[stud_data['math score']<20]
+
+
+
+
+
+stud_data[stud_data['reading score']<20]
+
+
+
+
+
+stud_data[stud_data['writing score']<20]
+
+
+
+
+
+#importing matplotlib
+import matplotlib.pyplot as plt
+#using scatterplot 
+scat=plt.subplot()
+scat.scatter(stud_data['reading score'],stud_data['writing score'])
+plt.show()
+
+
+
+
+
+scat.set_xlabel('reading score')
+scat.set_ylabel('Writing score')
+plt.show()
+
+
+
+
+
+np.where((stud_data['reading score']<20)&(stud_data['writing score']>1))
+
+
+
+
+
+import scipy
+from scipy import stats
+
+
+
+
+
+z=np.abs(stats.zscore(stud_data['math score']))
+z
+
+
+
+
+
+threshhold=0.00001
+#display outliers
+sample_outliers=np.where(z<threshhold)
+sample_outliers
+
+
+
+
+
+stud_data['math score'].plot(kind='hist')
+
+
+
+
+
+stud_data['logmath']=np.log10(stud_data['math score'])
+stud_data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
